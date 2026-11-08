@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MyAlfa · הבירוקרטיה עלינו, הבוקר עליכם</title>
+<title>MyAlfa · הבירוקרטיה עלינו, השלווה אצלכם</title>
 <meta name="description" content="MyAlfa מבית אלפא ביטוח: מערכת חכמה שעובדת עם סוכן הביטוח שלכם, בודקת את הביטוחים, הפנסיה והחזרי המס, ומחפשת איך לחסוך לכם כסף.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#F7F7FB">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="he_IL">
-<meta property="og:title" content="MyAlfa · הבירוקרטיה עלינו, הבוקר עליכם">
+<meta property="og:title" content="MyAlfa · הבירוקרטיה עלינו, השלווה אצלכם">
 <meta property="og:description" content="מערכת חכמה שעובדת עם סוכן הביטוח שלכם, בודקת את הביטוחים, הפנסיה והחזרי המס, ומחפשת איך לחסוך לכם כסף.">
 <meta property="og:url" content="https://sokolovskypaul-maker.github.io/myalfa/">
 <meta property="og:image" content="https://sokolovskypaul-maker.github.io/myalfa/og.png">
@@ -93,7 +93,10 @@ button,input{font:inherit;color:inherit}
 
 .stage{grid-area:stage;position:sticky;top:0;height:100svh;padding:var(--m) 0;align-self:start}
 .stage-field{position:relative;height:100%;background:var(--stage);border-radius:var(--r);display:grid;place-items:center;overflow:hidden}
-.stage-caption{position:absolute;inset-inline:0;bottom:20px;text-align:center;font-size:var(--t-small);color:#55598A;transition:opacity .5s var(--ease)}
+.stage-caption{display:none;position:absolute;inset-inline:0;bottom:20px;z-index:1;text-align:center;font-size:var(--t-small);color:#55598A;transition:opacity .5s var(--ease)}
+/* the plasticine ribbon behind the phone: a film the scroll plays (frames drawn on a canvas) */
+.ribbon{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;z-index:0}
+.stage-field .screen,.slot .mini-stage{position:relative;z-index:1}
 .column{grid-area:col;min-width:0}
 
 /* ── Hero card ────────────────────────────────────────── */
@@ -134,6 +137,13 @@ button,input{font:inherit;color:inherit}
 .toggle input:focus-visible + span{outline:3px solid var(--accent);outline-offset:3px}
 .toggle:active span{transform:scale(.97)}
 .row{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.hint{display:inline-flex;align-items:center;gap:14px;margin:0;font-family:var(--f-display);font-weight:600;font-size:19px;color:var(--ink)}
+.hint[hidden]{display:none}
+.hint b{color:var(--accent);font-weight:700}
+.hint-arrow{width:64px;height:32px;flex:none;--nx:-7px;--ny:0px}
+.hint-arrow path{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.hint.in .hint-arrow{animation:nudge .9s var(--ease) .7s 3}
+@keyframes nudge{0%,100%{transform:translate(0,0) rotate(var(--rot,0deg))}50%{transform:translate(var(--nx),var(--ny)) rotate(var(--rot,0deg))}}
 .status{font-size:var(--t-small);color:var(--ink-soft);min-height:1.5em}
 
 /* ── Agency band (breaks the split) ───────────────────── */
@@ -166,7 +176,7 @@ button,input{font:inherit;color:inherit}
 /* ══ The product's own interface (data-ui) ════════════ */
 [data-ui]{font-family:var(--f-text);color:var(--ink)}
 .clay{background:var(--c,#fff);border-radius:1.35em;box-shadow:inset 0 2px 0 rgba(255,255,255,.8),inset 0 -4px 0 rgba(0,16,60,.07),0 14px 24px -16px rgba(0,16,60,.42)} /* taste-skill-ignore: data-ui surface */
-.screen{position:relative;height:min(84svh,780px);aspect-ratio:9/16;container-type:inline-size;border-radius:46px;background:var(--card);box-shadow:inset 0 3px 0 rgba(255,255,255,.9),inset 0 -8px 0 rgba(0,16,60,.06),0 50px 70px -40px rgba(30,30,120,.45),0 18px 30px -22px rgba(0,16,60,.4);overflow:hidden} /* taste-skill-ignore: data-ui surface */
+.screen{position:relative;height:min(66svh,620px);aspect-ratio:9/16;container-type:inline-size;border-radius:46px;background:var(--card);box-shadow:inset 0 3px 0 rgba(255,255,255,.9),inset 0 -8px 0 rgba(0,16,60,.06),0 50px 70px -40px rgba(30,30,120,.45),0 18px 30px -22px rgba(0,16,60,.4);overflow:hidden} /* taste-skill-ignore: data-ui surface */
 .screen::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;opacity:.09;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .18  0 0 0 0 .18  0 0 0 0 .38  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 .layer{position:absolute;inset:0;padding:9cqw 7.5cqw 7cqw;display:flex;flex-direction:column;gap:3.6cqw;font-size:clamp(12px,4.15cqw,17px);opacity:0;visibility:hidden;transition:opacity .7s var(--ease),visibility 0s linear .7s}
 [data-show="home"] [data-layer="home"],
@@ -227,7 +237,13 @@ button,input{font:inherit;color:inherit}
 .fld label{font-size:.78em;color:var(--ink-soft);font-weight:600}
 .fld .val{--c:#fff;min-height:2.6em;padding:.6em .9em;font-weight:600;display:flex;align-items:center;font-size:.95em}
 .fld .val.sign{font-family:var(--f-display);font-weight:500;font-size:1.25em;letter-spacing:-.01em}
-.approve-ui{margin-top:auto;display:flex;justify-content:center}
+.approve-ui{position:relative;margin-top:auto;display:flex;justify-content:center;width:100%;padding:0;border:0;background:none;border-radius:999px;font:inherit;cursor:pointer}
+.approve-ui:disabled{cursor:default}
+.approve-ui:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+.approve-ui:active span{transform:scale(.97)}
+.approve-ui::after{content:"";position:absolute;inset:-.35em;border-radius:999px;border:.18em solid var(--accent);opacity:0;pointer-events:none}
+.layer.run .approve-ui:not(:disabled)::after{animation:ring 1.5s ease-out 4 .9s}
+@keyframes ring{0%{opacity:.55;transform:scale(.97)}100%{opacity:0;transform:scale(1.1)}}
 .approve-ui span{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:3em;border-radius:999px;background:var(--accent);color:#fff;font-family:var(--f-display);font-weight:600;font-size:1.05em;box-shadow:inset 0 2px 0 rgba(255,255,255,.45),inset 0 -4px 0 rgba(0,0,0,.14)} /* taste-skill-ignore: data-ui surface */
 .stamp{position:absolute;inset-inline-start:14cqw;top:52%;padding:.25em .6em;border:.22em solid var(--accent);border-radius:.5em;color:var(--accent);font-family:var(--f-display);font-weight:700;font-size:2.6em;letter-spacing:-.02em;transform:rotate(-9deg) scale(1.6);opacity:0;pointer-events:none;background:rgba(255,255,255,.6)}
 .stamp.on{opacity:1;transform:rotate(-9deg) scale(1)}
@@ -282,9 +298,10 @@ button,input{font:inherit;color:inherit}
   .wordmark span{display:none}
   .bar nav{gap:20px}
   .stage{display:none}
-  .slot{display:flex;justify-content:center;margin:36px 0 8px;padding:28px 0;background:var(--stage);border-radius:var(--r)}
+  .slot{display:flex;justify-content:center;position:relative;overflow:hidden;margin:36px 0 8px;padding:80px 0;background:var(--stage);border-radius:var(--r)}
   .hero .slot{align-self:stretch;margin:48px 0 0}
-  .slot .screen{height:auto;width:min(320px,76vw)}
+  .slot .screen{height:auto;width:min(280px,64vw)}
+  .hint-arrow{--rot:90deg;--nx:0px;--ny:-7px;transform:rotate(90deg);width:48px;height:24px}
   .hero{min-height:auto;padding:64px 22px 56px}
   .hero .lede{font-size:18px}
   .sec{padding:110px 22px 24px}
@@ -311,9 +328,10 @@ button,input{font:inherit;color:inherit}
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
   .js [data-reveal]{transform:none;transition:opacity .3s linear}
-  .layer{transition:none!important}
+  .layer{transition:none!important;display:none!important}
+  [data-show="home"] [data-layer="home"],[data-show="chaos"] [data-layer="chaos"],[data-show="agent"] [data-layer="agent"],[data-show="check"] [data-layer="check"],[data-show="found"] [data-layer="found"],[data-show="form"] [data-layer="form"]{display:flex!important}
   .js .hero [data-reveal]{animation:none}
-  .layer.run .pop,.layer.run .drop,[data-layer="check"].run .tick,.stamp.on{animation:none!important}
+  .layer.run .pop,.layer.run .drop,[data-layer="check"].run .tick,.stamp.on,.layer.run .approve-ui::after,.hint.in .hint-arrow{animation:none!important}
   .pencil{display:none}
   .btn,.toggle span{transition:none}
 }
@@ -332,12 +350,12 @@ button,input{font:inherit;color:inherit}
   </header>
 
   <!-- The stage: Danny's phone screen. Fixed while the column scrolls. -->
-  <aside class="stage" data-show="home" aria-hidden="true">
+  <aside class="stage" data-show="home">
     <div class="stage-field">
       <div class="screen" data-ui>
 
         <!-- home -->
-        <div class="layer" data-layer="home">
+        <div class="layer" data-layer="home" aria-hidden="true">
           <div class="ui-top"><span class="ui-brand" dir="ltr"><img src="icon.png" alt="">MyAlfa</span><span class="ui-small">אלפא ביטוח</span></div>
           <div class="home-greet"><div class="ui-small">בוקר טוב,</div><div class="ui-title">דני</div></div>
           <div class="ui-small">הכול נבדק החודש. אין מה לעשות.</div>
@@ -351,7 +369,7 @@ button,input{font:inherit;color:inherit}
         </div>
 
         <!-- chaos -->
-        <div class="layer" data-layer="chaos">
+        <div class="layer" data-layer="chaos" aria-hidden="true">
           <div class="lock-time" dir="ltr">07:02</div>
           <div class="lock-sub">יש לך 6 התראות חדשות</div>
           <div class="clay note drop" style="--i:0;--rot:-1.5deg"><div class="app" style="--ac:var(--sky)">בנק</div><div><b>הבנק</b><span>3 שיחות שלא נענו</span></div></div>
@@ -363,7 +381,7 @@ button,input{font:inherit;color:inherit}
         </div>
 
         <!-- agent -->
-        <div class="layer" data-layer="agent">
+        <div class="layer" data-layer="agent" aria-hidden="true">
           <div class="ui-top"><span class="ui-brand" dir="ltr"><img src="icon.png" alt="">MyAlfa</span><span class="ui-small">הסוכן שלך</span></div>
           <div class="clay tile pop" style="--i:0;padding:1.3em 1.2em;margin-top:3cqw"><div class="ava">אב</div><div class="t"><b style="font-size:1.3em">אלפא ביטוח</b><span style="display:flex;align-items:center;gap:.45em"><i class="dot"></i>מחובר ל-MyAlfa</span></div></div>
           <div class="ui-small pop" style="--i:1;margin-top:2cqw">מה הסוכן שלך רואה</div>
@@ -375,7 +393,7 @@ button,input{font:inherit;color:inherit}
         </div>
 
         <!-- periodic check -->
-        <div class="layer" data-layer="check">
+        <div class="layer" data-layer="check" aria-hidden="true">
           <div class="ui-top"><span class="ui-brand" dir="ltr"><img src="icon.png" alt="">MyAlfa</span><span class="ui-small">בדיקה תקופתית</span></div>
           <div class="ui-title" style="margin-top:3cqw">הבדיקה של החודש</div>
           <div class="ui-small chk-status">בודקת…</div>
@@ -389,7 +407,7 @@ button,input{font:inherit;color:inherit}
         </div>
 
         <!-- found -->
-        <div class="layer" data-layer="found">
+        <div class="layer" data-layer="found" aria-hidden="true">
           <div class="clay banner drop" style="--i:0">
             <div class="ui-top"><span><b class="en" dir="ltr" style="font-size:1em">MyAlfa</b> · עכשיו</span><span>אלפא ביטוח</span></div>
             <b>נמצא חיסכון</b>
@@ -405,14 +423,14 @@ button,input{font:inherit;color:inherit}
         </div>
 
         <!-- forms -->
-        <div class="layer" data-layer="form">
+        <div class="layer" data-layer="form" role="group" aria-label="הטופס בטלפון">
           <div class="ui-top"><span class="ui-brand" dir="ltr"><img src="icon.png" alt="">MyAlfa</span><span class="ui-small">טופס</span></div>
           <div><div class="ui-title" style="font-size:1.45em">בקשה לעדכון פוליסה</div><div class="ui-small">אלפא ביטוח · ביטוח רכב</div></div>
           <div class="fld"><label>שם מלא</label><div class="clay val" data-value="דני כהן"></div></div>
           <div class="fld"><label>מספר פוליסה</label><div class="clay val" data-value="4471-2093" dir="ltr" style="justify-content:flex-end"></div></div>
           <div class="fld"><label>הכיסוי החדש</label><div class="clay val" data-value="מקיף, במחיר נמוך יותר"></div></div>
           <div class="fld"><label>חתימה</label><div class="clay val sign" data-value="דני כ."></div></div>
-          <div class="approve-ui"><span class="approve-label">אישור</span></div>
+          <button class="approve-ui" type="button"><span class="approve-label">אישור</span></button>
           <div class="stamp">הוגש</div>
           <svg class="pencil" viewBox="0 0 120 30" aria-hidden="true"><rect x="22" y="5" width="86" height="20" rx="6" fill="#6C53EF"/><rect x="22" y="5" width="86" height="7" rx="3.5" fill="#BD88FA" opacity=".8"/><rect x="100" y="5" width="16" height="20" rx="5" fill="#F4B6A8"/><path d="M22 5 L2 15 L22 25 Z" fill="#F2D3A6"/><path d="M8 12 L2 15 L8 18 Z" fill="#16224A"/></svg>
         </div>
@@ -426,7 +444,7 @@ button,input{font:inherit;color:inherit}
 
     <section class="hero" data-state="home" aria-labelledby="h-hero">
       <img class="hero-icon" src="icon.png" width="588" height="571" alt="הסמל של MyAlfa" data-reveal>
-      <h1 id="h-hero" data-reveal style="--i:1">הבירוקרטיה עלינו. הבוקר עליכם.</h1>
+      <h1 id="h-hero" data-reveal style="--i:1">הבירוקרטיה עלינו. השלווה אצלכם.</h1>
       <p class="lede" data-reveal style="--i:2"><span class="en" dir="ltr">MyAlfa</span> מבית אלפא ביטוח: מערכת חכמה שעובדת עם סוכן הביטוח שלכם, בודקת את הביטוחים, הפנסיה והחזרי המס, ומחפשת איך לחסוך לכם כסף.</p>
       <div class="actions" data-reveal style="--i:3">
         <a class="btn" href="#how">ראו איך זה עובד</a>
@@ -486,7 +504,7 @@ button,input{font:inherit;color:inherit}
           <p data-reveal style="--i:1">לחיצה אחת על אישור, והטופס מתמלא לבד ומוגש דרך הסוכן שלכם. אתם חוזרים למיטה.</p>
           <div class="slot"></div>
           <div class="row ctrl" data-reveal style="--i:2">
-            <button class="btn" type="button" id="approve">אישור</button>
+            <p class="hint" id="approve-hint" data-reveal><span>לחצו על <b>אישור</b> בטלפון</span><svg class="hint-arrow" viewBox="0 0 64 32" aria-hidden="true"><path d="M58 26 C 42 30 20 24 9 11"/><path d="M10 22 L9 11 L19.6 13.8"/></svg></p>
             <button class="textbtn" type="button" id="reset" hidden>להתחיל שוב</button>
             <span class="status" id="form-status" aria-live="polite"></span>
           </div>
@@ -522,7 +540,7 @@ button,input{font:inherit;color:inherit}
 
 <section class="cta" aria-labelledby="h-cta">
   <div class="cta-words">
-    <h2 id="h-cta" data-reveal>הבוקר<br>עליכם.</h2>
+    <h2 id="h-cta" data-reveal>השלווה<br>אצלכם.</h2>
     <p data-reveal style="--i:1"><span class="en" dir="ltr">MyAlfa</span> מגיעה בקרוב ללקוחות אלפא ביטוח. עד אז, הסוכן שלכם כאן בשבילכם.</p>
   </div>
   <div class="cta-ui" data-reveal style="--i:2">
@@ -579,7 +597,7 @@ button,input{font:inherit;color:inherit}
     const wrap = document.createElement('div');
     wrap.className = 'mini-stage';
     wrap.dataset.show = name;
-    wrap.setAttribute('aria-hidden', 'true');
+    if (name !== 'form') wrap.setAttribute('aria-hidden', 'true');
     const copy = proto.cloneNode(true);
     copy.querySelectorAll('[data-layer]').forEach(l => { if (l.dataset.layer !== name) l.remove(); });
     wrap.appendChild(copy);
@@ -646,12 +664,12 @@ button,input{font:inherit;color:inherit}
     $('#found-status').textContent = 'נמצא חיסכון בביטוח הרכב. הסוכן מעודכן.';
   });
 
-  /* forms: the approval, written on twos */
-  const approveBtn = $('#approve'), resetBtn = $('#reset'), formStatus = $('#form-status');
-  let busy = false;
+  /* forms: the approval happens on the phone itself; the page only points at the button */
+  const resetBtn = $('#reset'), formStatus = $('#form-status'), hint = $('#approve-hint');
+  let busy = false, done = false;
   const wait = ms => new Promise(r => setTimeout(r, ms));
   const approve = async () => {
-    if (busy || approveBtn.disabled) return; busy = true;
+    if (busy || done) return; busy = true;
     if (!mobile.matches) setState('form');
     const scr = screenFor('form');
     const vals = $$('.val', scr), stamp = $('.stamp', scr), pencil = $('.pencil', scr), label = $('.approve-label', scr);
@@ -660,7 +678,8 @@ button,input{font:inherit;color:inherit}
       pencil.style.setProperty('--px', (r.left - s.left + 24) + 'px');
       pencil.style.setProperty('--py', (r.top - s.top - 6) + 'px');
     };
-    approveBtn.disabled = true; label.textContent = 'ממלאת…'; formStatus.textContent = 'ממלאת את הטופס…';
+    $$('.approve-ui').forEach(b => b.disabled = true);
+    label.textContent = 'ממלאת…'; formStatus.textContent = 'ממלאת את הטופס…'; hint.hidden = true;
     if (reduce) {
       vals.forEach(v => v.textContent = v.dataset.value);
     } else {
@@ -677,19 +696,18 @@ button,input{font:inherit;color:inherit}
     }
     stamp.classList.add('on');
     label.textContent = 'אושר';
-    approveBtn.textContent = 'אושר';
     formStatus.textContent = 'הטופס הוגש דרך הסוכן שלכם.';
     resetBtn.hidden = false;
-    busy = false;
+    done = true; busy = false;
   };
-  approveBtn.addEventListener('click', approve);
   document.addEventListener('click', e => { if (e.target.closest('.approve-ui')) approve(); });
   resetBtn.addEventListener('click', () => {
     $$('[data-layer="form"] .val').forEach(v => v.textContent = '');
     $$('.stamp').forEach(s => s.classList.remove('on'));
     $$('.approve-label').forEach(l => l.textContent = 'אישור');
-    approveBtn.disabled = false; approveBtn.textContent = 'אישור';
-    formStatus.textContent = ''; resetBtn.hidden = true; approveBtn.focus();
+    $$('.approve-ui').forEach(b => b.disabled = false);
+    formStatus.textContent = ''; resetBtn.hidden = true; hint.hidden = false; done = false;
+    const btn = $('.approve-ui', screenFor('form')); if (btn) btn.focus();
   });
 
   /* closing screen: the greeting follows the name */
@@ -697,6 +715,205 @@ button,input{font:inherit;color:inherit}
   nameIn.addEventListener('input', () => { wName.textContent = nameIn.value.trim() || 'דני'; });
   $$('input[name="first"]').forEach(r => r.addEventListener('change', () => { wSub.textContent = 'נתחיל ' + r.value + '.'; }));
 })();
+</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+/* The stage behind the phone, drawn live with WebGL (three.js):
+   a soft gradient in the MyAlfa colours with a fine grain, and six glass cards.
+   At the top they float around the phone, in "the mornings" they scatter and tumble,
+   and through the features they fly into order around the phone, in the shape of the logo's A.
+   Drawn on every display refresh, so the motion is as smooth as the screen allows (60 or 120 Hz). */
+import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const split = document.querySelector('.split');
+const views = [];
+const addView = (host) => {
+  if (!host) return;
+  const c = document.createElement('canvas');
+  c.className = 'ribbon'; c.setAttribute('aria-hidden', 'true');
+  host.prepend(c);
+  views.push({ c, g: c.getContext('2d'), host, on: true });
+};
+addView(document.querySelector('.stage-field'));
+document.querySelectorAll('.slot').forEach(addView);
+const vio = new IntersectionObserver(es => es.forEach(e => {
+  const v = views.find(v => v.host === e.target); if (v) { v.on = e.isIntersecting; if (v.on) kick(); }
+}));
+views.forEach(v => vio.observe(v.host));
+
+let renderer = null;
+try { renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' }); } catch (e) { renderer = null; }
+
+const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+const smooth = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * t * (t * (t * 6 - 15) + 10); };
+const lerp = (a, b, t) => a + (b - a) * t;
+let raf = 0;
+function kick() { if (renderer && !raf) raf = requestAnimationFrame(tick); }
+
+/* ---------- scene ---------- */
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30, 0.74, 0.1, 100);
+camera.position.set(0, 0, 12);
+const bgScene = new THREE.Scene();
+const bgCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+const bgMat = new THREE.ShaderMaterial({
+  uniforms: { uP: { value: 0 }, uT: { value: 0 }, uA: { value: 0.74 }, uRes: { value: new THREE.Vector2(1, 1) } },
+  vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+  fragmentShader: `
+    precision highp float;
+    varying vec2 vUv; uniform float uP, uT, uA; uniform vec2 uRes;
+    float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+    float blob(vec2 p, vec2 c, float r){ vec2 d = p - c; return exp(-dot(d, d) / (r * r)); }
+    void main(){
+      vec2 p = vec2((vUv.x - 0.5) * uA, vUv.y - 0.5);
+      float chaos = smoothstep(0.08, 0.22, uP) * (1.0 - smoothstep(0.34, 0.62, uP));
+      float ph = uP * 6.2831 + uT * 0.04;
+      vec3 col = vec3(0.914, 0.910, 0.988);                                    // the icon's lavender
+      col = mix(col, vec3(0.741, 0.533, 0.980), 0.42 * blob(p, vec2(-0.22 + 0.10 * sin(ph * 0.7), 0.26 + 0.08 * cos(ph)), 0.30 + 0.06 * chaos));
+      col = mix(col, vec3(0.082, 0.812, 0.992), 0.30 * blob(p, vec2(0.24 + 0.09 * cos(ph * 0.9), -0.24 + 0.10 * sin(ph * 0.8)), 0.30 + 0.05 * chaos));
+      col = mix(col, vec3(0.424, 0.325, 0.937), 0.20 * blob(p, vec2(0.18 * sin(ph * 1.3 + 1.0), 0.05 + 0.12 * cos(ph * 1.1)), 0.24 + 0.10 * chaos));
+      col = mix(col, vec3(0.914, 0.910, 0.988), 0.35 * smoothstep(0.35, 0.95, uP));   // the end settles calm
+      col += (hash(vUv * uRes + floor(uT * 24.0)) - 0.5) * 0.028;              // a fine, matte grain
+      gl_FragColor = vec4(col, 1.0);
+    }`,
+  depthWrite: false, depthTest: false,
+});
+bgScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), bgMat));
+
+if (renderer) {
+  renderer.setClearColor(0xe9e8fc, 1);
+  renderer.autoClear = false;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+}
+scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+const key = new THREE.DirectionalLight(0xffffff, 1.5); key.position.set(-4, 6, 8); scene.add(key);
+const rim = new THREE.DirectionalLight(0xc9b8ff, 0.8); rim.position.set(5, -3, -4); scene.add(rim);
+
+/* ---------- the cards: glass, with a label printed on the front ---------- */
+const W = 1.7, H = 1.06;
+const CARDS = [
+  { t: 'MyAlfa', s: 'מבית אלפא ביטוח', tint: '#F2F0FD', icon: true, side: 'c', order: [0, 2.72, -0.2, 0] },
+  { t: 'ביטוחים', s: 'נבדק החודש', tint: '#E7DEFD', side: 'l', order: [-1.5, 0.85, -0.4, 0.22] },
+  { t: 'פנסיה', s: 'נבדק החודש', tint: '#D9E6FE', side: 'l', order: [-1.62, -1.25, -0.3, 0.22] },
+  { t: 'החזרי מס', s: 'נבדק החודש', tint: '#D2F2FB', side: 'r', order: [1.5, 0.85, -0.4, -0.22] },
+  { t: 'נמצא חיסכון', s: 'ביטוח רכב', tint: '#E7DEFD', side: 'r', order: [1.62, -1.25, -0.3, -0.22] },
+  { t: 'הוגש', s: 'בקשה לעדכון פוליסה', tint: '#F2F0FD', stamp: true, side: 'c', order: [0, -2.74, -0.2, 0] },
+];
+const rnd = (i, k) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
+const geo = new RoundedBoxGeometry(W, H, 0.07, 4, 0.15);
+const glass = new THREE.MeshPhysicalMaterial({
+  color: 0xffffff, roughness: 0.16, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.1,
+  iridescence: 1, iridescenceIOR: 1.35, iridescenceThicknessRange: [260, 520],
+  transparent: true, opacity: 0.55, envMapIntensity: 1.2,
+});
+const icon = new Image(); icon.src = 'icon.png';
+function paint(tex, c) {
+  const cv = tex.image, g = cv.getContext('2d'), w = cv.width, h = cv.height, r = 52, pad = 34;
+  g.clearRect(0, 0, w, h);
+  g.fillStyle = c.tint; g.globalAlpha = 0.9;
+  g.beginPath(); g.roundRect(8, 8, w - 16, h - 16, r); g.fill(); g.globalAlpha = 1;
+  const left = c.side === 'l', tx = left ? pad + 10 : w - pad - 10, mx = left ? w - pad - 108 : pad;   // text on the visible side
+  g.direction = 'rtl'; g.textAlign = left ? 'left' : 'right'; g.fillStyle = '#001028';
+  g.font = '600 64px Rubik, Assistant, sans-serif'; g.fillText(c.t, tx, 128);
+  g.font = '600 38px Assistant, Rubik, sans-serif'; g.fillStyle = '#4A5470'; g.fillText(c.s, tx, 196);
+  if (c.icon && icon.complete && icon.naturalWidth) g.drawImage(icon, mx, 56, 150, 146);
+  else if (c.stamp) {
+    g.save(); g.translate(mx + 92, 150); g.rotate(-0.16);
+    g.strokeStyle = '#1725DD'; g.lineWidth = 9; g.beginPath(); g.roundRect(-84, -48, 168, 96, 16); g.stroke();
+    g.fillStyle = '#1725DD'; g.font = '700 52px Rubik, sans-serif'; g.textAlign = 'center'; g.direction = 'rtl'; g.fillText('הוגש', 0, 18); g.restore();
+  } else {
+    g.fillStyle = '#001028'; g.beginPath(); g.arc(mx + 54, 128, 46, 0, Math.PI * 2); g.fill();
+    g.strokeStyle = '#F7F7FB'; g.lineWidth = 11; g.lineCap = 'round'; g.lineJoin = 'round';
+    g.beginPath(); g.moveTo(mx + 32, 130); g.lineTo(mx + 48, 148); g.lineTo(mx + 78, 110); g.stroke();
+  }
+  tex.needsUpdate = true;
+}
+const cards = CARDS.map((c, i) => {
+  const cv = document.createElement('canvas'); cv.width = 640; cv.height = 400;
+  const tex = new THREE.CanvasTexture(cv); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
+  const grp = new THREE.Group();
+  grp.add(new THREE.Mesh(geo, glass));
+  const label = new THREE.Mesh(new THREE.PlaneGeometry(W * 0.97, H * 0.97), new THREE.MeshBasicMaterial({ map: tex, transparent: true, toneMapped: false }));
+  label.position.z = 0.04; grp.add(label);
+  scene.add(grp);
+  const [ox, oy, oz, orz] = c.order;
+  return {
+    c, tex, grp,
+    hero: new THREE.Vector3(ox * 1.12, oy * 1.06, oz - 0.6 + rnd(i, 1) * 0.6),
+    heroQ: new THREE.Quaternion().setFromEuler(new THREE.Euler((rnd(i, 2) - 0.5) * 0.5, (rnd(i, 3) - 0.5) * 0.7, orz * 0.6 + (rnd(i, 4) - 0.5) * 0.3)),
+    chaos: new THREE.Vector3((rnd(i, 5) - 0.5) * 5.2, (rnd(i, 6) - 0.5) * 6.0, (rnd(i, 7) - 0.5) * 2.4 - 0.4),
+    spin: new THREE.Vector3((rnd(i, 8) - 0.5) * 7, (rnd(i, 9) - 0.5) * 7, (rnd(i, 10) - 0.5) * 5),
+    order: new THREE.Vector3(ox, oy, oz),
+    orderQ: new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, orz)),
+  };
+});
+const repaint = () => cards.forEach(k => paint(k.tex, k.c));
+repaint();
+icon.onload = repaint;
+document.fonts && document.fonts.ready.then(repaint);
+
+/* ---------- scroll → story ---------- */
+const target = () => {
+  if (reduce) return 1;
+  const r = split.getBoundingClientRect();
+  return clamp(-r.top / Math.max(1, split.offsetHeight - innerHeight), 0, 1);
+};
+let p = target(), prevT = 0;
+const qa = new THREE.Quaternion(), qb = new THREE.Quaternion(), eu = new THREE.Euler();
+function pose(t, sx) {
+  const a = smooth(0.07, 0.2, p);                                   // hero → chaos
+  cards.forEach((k, i) => {
+    const b = smooth(0.34 + i * 0.075, 0.5 + i * 0.075, p);         // chaos → order, one card after the other
+    const drift = 1 - b;
+    const hx = lerp(k.hero.x, k.chaos.x + Math.sin(p * 9 + i) * 0.5, a);
+    const hy = lerp(k.hero.y, k.chaos.y + Math.cos(p * 7 + i * 2) * 0.5, a);
+    const hz = lerp(k.hero.z, k.chaos.z, a);
+    const x = lerp(hx, k.order.x, b), y = lerp(hy, k.order.y, b), z = lerp(hz, k.order.z, b);
+    const bob = reduce ? 0 : Math.sin(t * 0.0007 + i * 1.3) * 0.05 * (0.4 + 0.6 * drift);
+    k.grp.position.set(x * sx, y + bob, z);
+    qb.setFromEuler(eu.set(k.spin.x * p, k.spin.y * p, k.spin.z * p));
+    qa.copy(k.heroQ).slerp(qb, a);
+    k.grp.quaternion.copy(qa).slerp(k.orderQ, b);
+  });
+}
+
+function tick(now) {
+  raf = 0;
+  if (!renderer) return;
+  const dt = prevT ? Math.min(64, now - prevT) : 16; prevT = now;
+  const tgt = target();
+  p += (tgt - p) * (1 - Math.exp(-dt / 110));
+  if (Math.abs(tgt - p) < 0.0005 || reduce) p = tgt;
+  const vis = views.filter(v => v.on && v.c.clientWidth && v.c.clientHeight);
+  if (!vis.length) { prevT = 0; return; }
+  const dpr = Math.min(window.innerWidth < 900 ? 1.5 : 2, devicePixelRatio || 1);
+  const v0 = vis[0];
+  const Wd = Math.round(v0.c.clientWidth * dpr), Hd = Math.round(v0.c.clientHeight * dpr);
+  const cv = renderer.domElement;
+  if (cv.width !== Wd || cv.height !== Hd) { renderer.setSize(Wd, Hd, false); }
+  const aspect = Wd / Hd;
+  camera.aspect = aspect; camera.updateProjectionMatrix();
+  bgMat.uniforms.uP.value = p; bgMat.uniforms.uT.value = now / 1000; bgMat.uniforms.uA.value = aspect; bgMat.uniforms.uRes.value.set(Wd, Hd);
+  pose(now, Math.min(1, aspect / 0.74));
+  renderer.clear(); renderer.render(bgScene, bgCam); renderer.clearDepth(); renderer.render(scene, camera);
+  for (const v of vis) {
+    const w = Math.round(v.c.clientWidth * dpr), h = Math.round(v.c.clientHeight * dpr);
+    if (v.c.width !== w || v.c.height !== h) { v.c.width = w; v.c.height = h; }
+    v.g.drawImage(cv, 0, 0, w, h);
+  }
+  if (!reduce && !document.hidden) raf = requestAnimationFrame(tick);   // the cards breathe gently while in view
+}
+addEventListener('scroll', kick, { passive: true });
+addEventListener('resize', kick);
+document.addEventListener('visibilitychange', kick);
+kick();
 </script>
 </body>
 </html>
