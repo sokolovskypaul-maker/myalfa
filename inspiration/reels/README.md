@@ -16,7 +16,7 @@
 |---|---|---|---|---|---|
 | 1 | 4.11.2026 | [@by.shlabu · DfCvE6StS6H](https://www.instagram.com/reel/DfCvE6StS6H/) | blockout תלת-ממדי ב-Blender כ"חוזה תנועה" לווידאו AI ([כרטיס](2026-11-04_by-shlabu_DfCvE6StS6H.md)) | השיטה תועדה ונבנו שתי דוגמאות blockout במק. השלב הריאליסטי לא בוצע, כי הוא דורש מודל בתשלום | `motion/blockout-demo/`, `motion/barber-3d/` (במק) |
 | 2 | 8.11.2026 12:41 | [Jesse Rurka · DfVpRJEmVAI](https://www.instagram.com/reel/DfVpRJEmVAI/) | עבודה עם Git ו-GitHub: קומיטים, ענפים ובקשות מיזוג ([כרטיס](2026-11-08_jesse-rurka_DfVpRJEmVAI.md)) | נענה: כן, ככה אנחנו עובדים. אין מה להעתיק, זו שיטת עבודה | – |
-| 3 | 8.11.2026 12:41 | [eliron.giny · DfepstcA_Q4](https://www.instagram.com/reel/DfepstcA_Q4/) | שחזור פריים-אחר-פריים של סרטון ההשקה של Opus 5.5, עם עברית ([כרטיס](2026-11-08_eliron-giny_DfepstcA_Q4.md)) | **הועתק** כריל השקה מקורי לאלה (21 שניות, 29 חיתוכים). הקומיט נשאר מקומי בסשן הקודם, כי ה-push נדחה. ביקשתי מהסשן ההוא לדחוף עכשיו | `call-board/social/ella-launch/` + `social/ella_launch_v1.mp4` (אחרי שהענף יעלה) |
+| 3 | 8.11.2026 12:41 | [eliron.giny · DfepstcA_Q4](https://www.instagram.com/reel/DfepstcA_Q4/) | שחזור פריים-אחר-פריים של סרטון ההשקה של Opus 5.5, עם עברית ([כרטיס](2026-11-08_eliron-giny_DfepstcA_Q4.md)) | **הועתק** כריל השקה מקורי לאלה (21 שניות, 29 חיתוכים). הקומיט `a7455d5` קיים בסשן ההוא ולא אבד (אושר 21:06). ה-push נדחה משם ומכאן באותה שגיאת הרשאות GitHub | `call-board/social/ella-launch/` + `social/ella_launch_v1.mp4` (אחרי שהענף יעלה) |
 | 4 | 8.11.2026 15:59 (הקישור ב-21:10) | [johnbucog · Dcb4oFBBSFH](https://www.instagram.com/reel/Dcb4oFBBSFH/) | ריל "הישג + שער תגובות": "אימנתי מודל AI משלי", Comment 'Trainer' לגישה. 6.6K לייקים, 4.5K תגובות. נושא: LTX Trainer, מודל וידאו אישי ([כרטיס](2026-11-08_johnbucog_Dcb4oFBBSFH.md)) | נרשם. הווידאו עצמו עוד לא נצפה (רק הכיתוב והנתונים). ממתין לקובץ ולהחלטה אם לבנות כזה לאלה | – |
 
 ## התוצרים שלנו עד כה
@@ -24,7 +24,7 @@
 | קובץ | מה | איפה |
 |---|---|---|
 | `ep01_v6.mp4` | ריל פרק 1, 32 שניות, 1080×1920, 24fps, נשמר לתזמון באינסטגרם | `call-board/social/` |
-| `ella_launch_v1.mp4` | ריל ההשקה של אלה בסגנון סרטון השקה של מודל (ריל 3) | `call-board/social/`, ממתין ל-push מהסשן של 8.11 12:33 |
+| `ella_launch_v1.mp4` | ריל ההשקה של אלה בסגנון סרטון השקה של מודל (ריל 3) | `call-board/social/`, קיים בסשן של 8.11 12:33, ממתין לגישת GitHub כדי לעלות |
 
 ## איך מוסיפים ריל חדש
 1. פול שולח קישור (או קובץ, ואז הוא נשמר ב-`media/`).
