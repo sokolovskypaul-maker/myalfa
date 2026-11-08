@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Reel composition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;900&family=Rubik:wght@400;900&family=Secular+One&family=Assistant:wght@800&family=Frank+Ruhl+Libre:wght@900&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #0b0b0f; }
+  #stage { position: relative; width: 1080px; height: 1920px; display: flex; align-items: center; justify-content: center; }
+  #word { color: #f4f1ea; text-align: center; padding: 0 70px; line-height: 1.05; word-break: keep-all; }
+  #beat { position: absolute; bottom: 90px; right: 90px; width: 26px; height: 26px; border-radius: 50%; background: #f4f1ea; opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="word"></div><div id="beat"></div></div>
+<script>
+// הקומפוזיציה: כל פריים הוא פונקציה של הזמן t (בשניות). אין setTimeout ואין אנימציות CSS בזמן אמת.
+const BPM = 120;                 // כל החיתוכים על רשת הקצב. שיר ב-120 BPM באינסטגרם יסתנכרן.
+const BEAT = 60 / BPM;           // 0.5 שנייה
+// שוט: beats = כמה פעימות הוא נמשך. font/size/bg/fg לפי הצורך. "" = פריים שחור (נשימה).
+const CUTS = [
+  { text: "הטלפון",            beats: 1,  font: "Heebo",             weight: 900, size: 260 },
+  { text: "מצלצל.",            beats: 1,  font: "Rubik",             weight: 900, size: 240 },
+  { text: "ואתה",              beats: 1,  font: "Secular One",       size: 250, bg: "#f4f1ea", fg: "#0b0b0f" },
+  { text: "מתחת לכיור",        beats: 2,  font: "Frank Ruhl Libre",  weight: 900, size: 190 },
+  { text: "",                  beats: 1 },
+  { text: "תכירו: אלה",        beats: 2,  font: "Assistant",         weight: 800, size: 210, bg: "#e63946", fg: "#fff" },
+];
+const DURATION = CUTS.reduce((s, c) => s + c.beats, 0) * BEAT;   // אורך הסרטון, נגזר מהשוטים
+const $word = document.getElementById("word"), $beat = document.getElementById("beat");
+
+function cutAt(t) {
+  let acc = 0;
+  for (const c of CUTS) { const end = acc + c.beats * BEAT; if (t < end) return { c, local: t - acc }; acc = end; }
+  return { c: CUTS[CUTS.length - 1], local: 0 };
+}
+// seek(t) מצייר את הפריים לזמן t. render.cjs קורא לה לכל פריים.
+window.seek = function (t) {
+  const { c, local } = cutAt(t);
+  document.body.style.background = c.bg || "#0b0b0f";
+  $word.textContent = c.text;
+  $word.style.color = c.fg || "#f4f1ea";
+  $word.style.fontFamily = c.font ? `"${c.font}", sans-serif` : "sans-serif";
+  $word.style.fontWeight = c.weight || 400;
+  $word.style.fontSize = (c.size || 200) + "px";
+  // כניסה קשה עם "פופ" קטן של 3 פריימים: מתחיל ב-104% ויורד ל-100%
+  const pop = Math.max(0, 1 - local / 0.1);
+  $word.style.transform = `scale(${1 + 0.04 * pop})`;
+  // נקודת קצב בפינה, לבדיקה שהחיתוכים על הפעימות. מוחקים לפני הפקה.
+  const phase = (t % BEAT) / BEAT;
+  $beat.style.opacity = phase < 0.15 ? 1 : 0;
+};
+window.duration = () => DURATION;
+window.ready = document.fonts.ready.then(() => true);
+seek(0);
+</script>
+</body>
+</html>
